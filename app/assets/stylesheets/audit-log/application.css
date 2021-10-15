@@ -148,8 +148,12 @@ hr {
   height: 34px;
   line-height: 34px;
 }
-.toolbar form { display: inline; }
+.toolbar form { display: inline-flex; }
 .toolbar .pull-right { float: right; }
+
+.form-group {
+  margin-right: 1rem;
+}
 
 #notice {
   padding: 8px 15px;
