@@ -1,8 +1,8 @@
 # AuditLog
 
-Trail audit logs (Operation logs) into the database for user behaviors, including a Web UI to query logs.
+[![build](https://github.com/rails-engine/audit-log/actions/workflows/build.yml/badge.svg)](https://github.com/rails-engine/audit-log/actions/workflows/build.yml)
 
-[![Build Status](https://travis-ci.org/rails-engine/audit-log.svg?branch=master)](https://travis-ci.org/rails-engine/audit-log)
+Trail audit logs (Operation logs) into the database for user behaviors, including a Web UI to query logs.
 
 > We used audit-log in our production environment more than 1 year, until now (2020.5.21), it's inserted about **20 million** log in our system.
 
@@ -133,6 +133,21 @@ Warden::Manager.before_failure do |env, opts|
   user = User.find_by_email(email)
   opts[:email] = email
   AuditLog.audit!(:sign_in_failure, nil, payload: opts, request: request, user: user)
+end
+```
+
+## Configuration
+
+You can write a `config/initializers/audit_log.rb` to configure the behavior of audit log.
+
+```rb
+AuditLog.configure do
+  # class name of you User model, default: 'User'
+  self.user_class = "User"
+  # current_user method name in your Controller, default: 'current_user'
+  self.current_user_method = "current_user"
+  # Speical a table_name for AuditLog model, default: "audit_logs"
+  self.table_name = "audit_logs"
 end
 ```
 
